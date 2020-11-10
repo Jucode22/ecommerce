@@ -54,3 +54,5 @@ const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
 // });
 export default connect(mapStateToProps)(Header);
 // now header has access to the currentUser property from a user-reducer without needing our app component to pass it as a prop
+
+//comment
