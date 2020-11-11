@@ -3,12 +3,17 @@ import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/crown.svg";
 import "./header.styles.scss";
 
+import { createStructuredSelector } from "reselect";
 import CartIcon from "../cart-icon/cart-icon.component";
 
 import { auth } from "../../firebase/firebase.utils";
 //connect is a higher order component that lets us modify our compenent to have access to things related to redux like our reducers
 // higher order components are functions that take components as arguments and return a better version component
 import { connect } from "react-redux";
+
+import { selectCartHidden } from "../../redux/cart/cart.selectors";
+
+import { selectCurrentUser } from "../../redux/user/user.selectors";
 import CartDropDown from "../cart-dropdown/cart-dropdown.component";
 const Header = ({ currentUser, hidden }) => (
   <div className="header">
@@ -44,10 +49,16 @@ const Header = ({ currentUser, hidden }) => (
 // now we are destructuring off a nested property
 // so we are saying get me the user value from the root reducer and from there get the current User value from the user reducer
 
-const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
-  currentUser,
-  hidden,
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+  hidden: selectCartHidden,
 });
+//OR U CAN DO THIS:
+// const mapStateToProps = (state) => ({
+//   currentUser: selectCurrentUser(state),
+//   hidden: selectCartHidden(state),
+// });
+
 // BELOW IS WHAT U COULD DO WITHOUT DESTRUCTURING
 // const mapStateToProps = (state) => ({
 //   currentUser: state.user.currentUser,

@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { selectCartItemsCount } from "../../redux/cart/cart.selectors";
 import { toggleCartHidden } from "../../redux/cart/cart.actions";
 
+import { createStructuredSelector } from "reselect";
+
 import React from "react";
 import { ReactComponent as ShoppingIcon } from "../../assets/shopping-bag.svg";
 
@@ -20,11 +22,9 @@ const mapDispatchToProps = (dispatch) => ({
 //we created a selector
 // because we wrote code that gets the entire state object and then pulls off a small portion or a slice of that state
 // we're computing a new value based on the state
-const mapStateToProps = (state) => {
-  return {
-    itemCount: selectCartItemsCount(state),
-  };
-};
+const mapStateToProps = createStructuredSelector({
+  itemCount: selectCartItemsCount,
+});
 
 //whenever we return a new object, redux rebuilds the entire state object, so mapStatetoprops is always being called and
 // that means it is always rerendering but we dont always want our app to rerender a new quantity all the time

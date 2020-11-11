@@ -1,15 +1,20 @@
 import "./App.css";
 import React from "react";
+
 import Homepage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
+import CheckoutPage from "./pages/checkout/checkout.component";
 import { Switch, Route, Redirect } from "react-router-dom";
-import Header from "./components/header/header.component";
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.components";
+
+import Header from "./components/header/header.component";
+
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
-
 import { setCurrentUser } from "./redux/user/user.actions";
-
 import { connect } from "react-redux";
+import { selectCurrentUser } from "./redux/user/user.selectors";
+import { createStructuredSelector } from "reselect";
+
 //we want to store the state of our users in our app
 // so that we can pass it into components that need it
 // thats why we convert App to a class component -> to have access to state
@@ -67,6 +72,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route path="/shop" component={ShopPage} />
+          <Route exact path="/checkout" component={CheckoutPage} />
           <Route
             exact
             path="/signin"
@@ -97,8 +103,8 @@ class App extends React.Component {
 // so we are invoking the setCurrentUser with a user, this returns an action object with currentUser and payload, which will be dispatched to all the reducers
 
 //user is from the root reducer
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser,
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
 });
 
 const mapDispatchToProps = (dispatch) => ({

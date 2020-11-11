@@ -24,7 +24,7 @@ class SignUp extends React.Component {
     event.preventDefault();
     const { displayName, email, password, confirmPassword } = this.state;
     // if the password and confirmed passwords aren't the same then alert the user and stay the same
-    if (password != confirmPassword) {
+    if (password !== confirmPassword) {
       alert("passwords don't match");
       return;
     }
