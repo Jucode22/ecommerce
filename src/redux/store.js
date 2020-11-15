@@ -3,8 +3,10 @@
 
 import { createStore, applyMiddleware } from "redux";
 import logger from "redux-logger";
-
 //logger is a middleware that helps us debug our redux code
+
+//redux-persist ensures that when someone reloads the page, the cart won't refresh too, instead the cart will hold all of the cartitems that the customer is planning to buy
+import { persistStore } from "redux-persist";
 
 import rootReducer from "./root-reducer";
 
@@ -14,6 +16,6 @@ const middlewares = [logger];
 
 //the ...middlewares take the individual components in its array
 // right now there is just the logger middleware in the array but later on we can add more
-const store = createStore(rootReducer, applyMiddleware(...middlewares));
-
-export default store;
+export const store = createStore(rootReducer, applyMiddleware(...middlewares));
+// the persistor is the persisted version of the store
+export const persistor = persistStore(store);
